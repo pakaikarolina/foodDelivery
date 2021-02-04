@@ -22,7 +22,7 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @PostMapping("/createNewFood")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Food createNewFood(@RequestBody Food food) {
         log.info("Received createNewFood request {} ... ", food);

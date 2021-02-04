@@ -3,9 +3,7 @@ package com.example.foodDelivery.entity;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -17,6 +15,9 @@ public class Order {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
+    @ManyToMany (mappedBy = "orders")
     private List<Food> foods;
+    @ManyToOne
+    @JoinColumn(name = "orderedBy")
     private User orderedBy;
 }
