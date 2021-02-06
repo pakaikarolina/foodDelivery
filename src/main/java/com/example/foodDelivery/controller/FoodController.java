@@ -71,5 +71,15 @@ public class FoodController {
         return foodlist;
     }
 
+    @GetMapping ("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Food getFoodById(@PathVariable ("id") String id) {
+        log.info("Received find request by id: {}", id);
 
+        Optional <Food> foundFoodById = foodService.getFoodById(id);
+        if (foundFoodById.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return foundFoodById.get();
+    }
 }

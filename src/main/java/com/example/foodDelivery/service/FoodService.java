@@ -27,11 +27,10 @@ public class FoodService {
     }
 
 
-
     public Food createNewFood(Food food) throws ValidationException {
         log.info("Creating new food based on {} ... ", food);
 
-        if(food.getName() == null || food.getName().equals("") || food.getPrice() < 0) {
+        if (food.getName() == null || food.getName().equals("") || food.getPrice() < 0) {
             log.error("Name must have a value ({name}) or price must be either 0 or more ({price})");
             throw new ValidationException("Name must have a value or price must be either 0 or more");
         }
@@ -66,5 +65,10 @@ public class FoodService {
         List<Food> foodList = foodRepository.findAll();
         log.debug("Total count: {}, ", foodList.size());
         return foodList;
+    }
+
+    public Optional<Food> getFoodById(String id) {
+        log.info("Listing food by id ...");
+        return foodRepository.findById(id);
     }
 }
