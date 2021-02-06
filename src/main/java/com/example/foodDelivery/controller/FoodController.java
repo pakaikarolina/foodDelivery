@@ -25,7 +25,7 @@ public class FoodController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Food createNewFood(@RequestBody Food food) {
-        log.info("Received createNewFood request {} ... ", food);
+        log.info("Received create new food request {} ... ", food);
         try {
             Food newFood = foodService.createNewFood(food);
             log.debug("The new food is: {}", newFood);
@@ -35,5 +35,19 @@ public class FoodController {
             throw new ResponseStatusException(e.getHttpStatus(), e.getMessage());
         }
 
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Food updateFood(@RequestBody Food food, @PathVariable ("id")  String id) {
+        log.info("Received update food request {} ... ", food);
+        try {
+            Food updatedFood = foodService.updateFood(food, id);
+            log.debug("The new food is: {}", updatedFood);
+            return updatedFood;
+        } catch (ValidationException e) {
+            log.error("Error when updating food: " + e.getMessage());
+            throw new ResponseStatusException(e.getHttpStatus(), e.getMessage());
+        }
     }
 }
