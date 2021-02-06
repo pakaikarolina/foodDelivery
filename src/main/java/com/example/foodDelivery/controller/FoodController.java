@@ -6,9 +6,13 @@ import com.example.foodDelivery.service.FoodService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/foods")
@@ -38,7 +42,7 @@ public class FoodController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public Food updateFood(@RequestBody Food food, @PathVariable ("id")  String id) {
         log.info("Received update food request {} ... ", food);
         try {
@@ -50,4 +54,22 @@ public class FoodController {
             throw new ResponseStatusException(e.getHttpStatus(), e.getMessage());
         }
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Food> getFood(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                              @RequestParam(value = "limit", required = false) Optional<Integer> limit) {
+        log.info("Retrieving registrations (page: {}, limit: {}) ...", page.isPresent() ? page.get() : "n.a.", limit.orElse(10));
+        List<Food> foodlist;
+        if (page.isPresent()) {
+            foodlist = foodService.listFoods(
+                    PageRequest.of(page.get(), limit.orElse(10)));
+        } else {
+            foodlist = foodService.listFoods();
+        }
+        log.debug("Found registrations: {}", foodlist.size());
+        return foodlist;
+    }
+
+
 }

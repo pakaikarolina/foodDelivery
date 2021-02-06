@@ -6,8 +6,12 @@ import com.example.foodDelivery.repository.FoodRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,5 +50,21 @@ public class FoodService {
         Food updatedFood = foodRepository.save(food);
         log.debug("Updated food: {}", food);
         return updatedFood;
+    }
+
+    public List<Food> listFoods(Pageable pageable) {
+        log.info("Listing foods (page information: {}) ...", pageable);
+        Page<Food> foodPage = foodRepository.findAll(pageable);
+        List<Food> foodList = foodPage.getContent();
+        log.debug("Total count: {}, total pages: {}", foodPage.getTotalElements(), foodPage.getTotalPages());
+
+        return foodList;
+    }
+
+    public List<Food> listFoods() {
+        log.info("Listing all foods ...");
+        List<Food> foodList = foodRepository.findAll();
+        log.debug("Total count: {}, ", foodList.size());
+        return foodList;
     }
 }
