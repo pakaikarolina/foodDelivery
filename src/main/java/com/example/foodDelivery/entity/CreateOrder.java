@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class CreateOrder {
-    List<String> foodId;
+    List<String> foodIdList;
     String userId;
 }

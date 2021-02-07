@@ -18,9 +18,8 @@ public class Order {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
     @ManyToMany (mappedBy = "orders")
-    private List<Food> foods = new ArrayList<>(); //null nem lehet amikor létrejön az order
-    @ManyToOne
+    private List<Food> foods = new ArrayList<>(); //null ne legyen amikor létrejön az order, hanem üres lista
+    @ManyToOne(cascade = CascadeType.ALL) //ha elmentünk egy ordert, ha van benne egy user, azt is elmenti
     @JoinColumn(name = "orderedBy")
     private User orderedBy;
-
 }
