@@ -1,10 +1,12 @@
 package com.example.foodDelivery.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Value
+@RequiredArgsConstructor
+
 public class CreateOrder {
     List<String> foodIdList;
     String userId;
