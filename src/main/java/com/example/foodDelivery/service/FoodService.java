@@ -56,7 +56,6 @@ public class FoodService {
         Page<Food> foodPage = foodRepository.findAll(pageable);
         List<Food> foodList = foodPage.getContent();
         log.debug("Total count: {}, total pages: {}", foodPage.getTotalElements(), foodPage.getTotalPages());
-
         return foodList;
     }
 

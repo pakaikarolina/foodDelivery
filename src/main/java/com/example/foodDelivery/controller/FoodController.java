@@ -59,7 +59,7 @@ public class FoodController {
     @ResponseStatus(HttpStatus.OK)
     public List<Food> getFood(@RequestParam(value = "page", required = false) Optional<Integer> page,
                               @RequestParam(value = "limit", required = false) Optional<Integer> limit) {
-        log.info("Retrieving registrations (page: {}, limit: {}) ...", page.isPresent() ? page.get() : "n.a.", limit.orElse(10));
+        log.info("Retrieving foods (page: {}, limit: {}) ...", page.isPresent() ? page.get() : "n.a.", limit.orElse(10));
         List<Food> foodlist;
         if (page.isPresent()) {
             foodlist = foodService.listFoods(
@@ -67,7 +67,7 @@ public class FoodController {
         } else {
             foodlist = foodService.listFoods();
         }
-        log.debug("Found registrations: {}", foodlist.size());
+        log.debug("Found foods: {}", foodlist.size());
         return foodlist;
     }
 
