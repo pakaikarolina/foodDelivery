@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,8 +18,9 @@ public class Order {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
     @ManyToMany (mappedBy = "orders")
-    private List<Food> foods;
+    private List<Food> foods = new ArrayList<>(); //null nem lehet amikor létrejön az order
     @ManyToOne
     @JoinColumn(name = "orderedBy")
     private User orderedBy;
+
 }
